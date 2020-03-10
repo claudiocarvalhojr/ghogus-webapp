@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <h1><%= title %></h1>
+  </div>
+  <div class="row" id="alertas">
+    <div class="alert alert-success"></div>
+  </div>
+
+  <div class="row">
+    <form action="/clientes/search" method="POST">
+      <table style="width: 100%;" class="table-condensed table-responsive">
+        <tbody>
+          <tr>
+            <td style="width:70%;">
+              <p>Clientes já cadastrados no sistema. <a href="/clientes/new">Cadastrar Novo</a> </p>
+            </td>
+            <td style="width:10%;"><input type="text" name="buscar" /></td>
+            <td style="width:10%;"><input type="submit" value="Buscar" name="btBuscar" /></td>
+            <td style="width:10%; text-align: center;"><a href="/"><img title="Home" src="/images/home.png" width="24"
+                  height="24" /></a></td>
+          </tr>
+        </tbody>
+      </table>
+      <table style="width: 100%;" class="table-striped table-hover table-condensed table-responsive">
+        <thead>
+          <tr style="background-color: #CCC">
+            <td style="width:60%; text-align: center;">Nome</td>
+            <td style="width:10%; text-align: center;">Idade</td>
+            <td style="width:10%; text-align: center;">UF</td>
+            <td style="width:20%; text-align: center;" colspan="2"></td>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (!docs || docs.length == 0) { %>
+          <tr>
+            <td colspan='5'>Nenhum cliente cadastrado.</td>
+          </tr>
+          <% } else { docs.forEach(function(customer) { %>
+          <tr>
+            <td style="width:60%;"><%= customer.nome %></td>
+            <td style="width:10%; text-align: center;"><%= customer.idade %></td>
+            <td style="width:10%; text-align: center;"><%= customer.uf %></td>
+            <td style="width:10%; text-align: center;"><a href="/clientes/edit/<%= customer._id %>"><img title="Editar"
+                  src="/images/editar.png" width="24" height="24" /></a></td>
+            <td style="width:10%; text-align: center;"><a href="/clientes/delete/<%= customer._id %>"
+                onclick="return confirm('Tem certeza?');"><img title="Excluir" src="/images/excluir.png" width="24"
+                  height="24" /></a></td>
+          </tr>
+          <% })} %>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

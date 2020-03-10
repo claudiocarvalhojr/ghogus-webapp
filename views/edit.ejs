@@ -1,0 +1,16 @@
+<h1><%= title %></h1>
+<p>Altere os dados abaixo para editar o cliente.</p>
+<form action="/clientes/edit/<%= doc._id %>" method="POST">
+    <p><label>Nome: <input type="text" name="nome" value="<%= doc.nome %>" /></label></p>
+    <p><label>Idade: <input type="number" name="idade" value="<%= doc.idade %>" /></label></p>
+    <p>
+        <label>UF:</label>
+        <select name="uf">
+            <option value="" selected disabled>Selecione o estado</option>
+            <option value="RS" <% if ( doc.uf == "RS") { %>selected<% } %>>RS</option>
+            <option value="SC" <% if ( doc.uf == "SC") { %>selected<% } %>>SC</option>
+            <option value="PR" <% if ( doc.uf == "PR") { %>selected<% } %>>PR</option>
+        </select>
+    </p>
+    <p><a href="/clientes">Voltar</a> | <input type="submit" value="Atualizar" /></p>
+</form>

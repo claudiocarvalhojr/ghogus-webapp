@@ -1,0 +1,47 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+tfoot {
+  padding: 50px;
+  font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00B7FF;
+}
+html,
+body {
+   margin: 0;
+   padding: 0;
+   height: 100%;
+}
+.all {
+   min-height: 100%;
+   position: relative;
+}
+.header {
+   text-align: center;
+   background: #6cf;
+   padding: 10px;
+   color: #fff;
+  }
+.content {
+   width: 50%;
+   padding: 10px;
+   padding-bottom: 60px;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-right: -50%;
+   transform: translate(-50%, -50%)
+   }
+.footer {
+   text-align: center;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   height: 80px;
+   background: #eee;
+   color: #aaa;
+}
+
