@@ -28,7 +28,7 @@ mongoClient.connect(DB_CONNECTION, { useUnifiedTopology: true }, function (err, 
    */
 
   var app = require('../app');
-  var debug = require('debug')('workshop:server');
+  var debug = require('debug')('ghogus-webapp:server');
   var http = require('http');
 
   /**
