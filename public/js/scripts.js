@@ -4,22 +4,25 @@ const danger = 'danger'
 
 $(document).ready(function () {
     const webApiDomain = 'http://api.ghogus.com'
+    // const webApiDomain = 'http://localhost:3000'
+    // const webApiDomain = ''
+    // console.log('amb: ' + process.env.NODE_ENV)
     var register_id = '';
     loadTable()
-    $('#divListagem,.alert').hide()
-    $('#btnList,#btnRegister').click(function () {
-        $('#divListagem,#divCadastro').toggle();
-    })
-    $('form').submit(function (event) {
-        event.preventDefault()
-        if ($('input[name="nome"]').val() === '' || $('input[name="idade"]').val() === '') {
-            alertMessage('#msgErrorSave')
-            return
-        }
-        const data = $(this).serializeArray()
-        updateDatabase(data, loadTable)
-        $('#divListagem,#divCadastro').toggle()
-    })
+    $('.alert').hide()
+    // $('#btnList,#btnRegister').click(function () {
+    //     $('#divListagem,#divCadastro').toggle();
+    // })
+    // $('form').submit(function (event) {
+    //     event.preventDefault()
+    //     if ($('input[name="nome"]').val() === '' || $('input[name="idade"]').val() === '') {
+    //         alertMessage('#msgErrorSave')
+    //         return
+    //     }
+    //     const data = $(this).serializeArray()
+    //     updateDatabase(data, loadTable)
+    //     $('#divListagem,#divCadastro').toggle()
+    // })
     function updateDatabase(data, callback) {
         const json = {}
         data.forEach(item => json[item['name']] = item['value'])
@@ -35,7 +38,7 @@ $(document).ready(function () {
         $.getJSON(webApiDomain + '/clientes', function (data) {
             data.forEach(item => {
                 count++;
-                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="cod">' + count + '</td><td id="nome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm"><span class="glyphicon glyphicon-remove"></span</button></td></tr>'
+                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="cod">' + count + '</td><td id="nome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
                 tbody.append(linha)
             })
         })

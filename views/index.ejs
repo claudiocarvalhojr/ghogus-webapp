@@ -3,9 +3,9 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Ghogus - <%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/styles.css">
 
@@ -15,17 +15,38 @@
 
   <div class="container">
 
-    <div class="row"><% include header.ejs %></div>
+    <div class="row col-xs-12"><% include header.ejs %></div>
 
-    <div class="row"><%- include(page) %></div>
+    <div class="row col-xs-12"><%- include(page) %></div>
 
-    <div class="row"><% include footer.ejs %></div>
+    <!-- <div class="row col-xs-12"><% include footer.ejs %></div> -->
+
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true"
+      id="modalConfirm">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+          </div>
+          <div class="modal-body">
+            Tem certeza que deseja excluir?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-default" id="btnModalCancel">Cancelar</button>
+            <button type="button" class="btn btn-md btn-primary" id="btnModalConfirm">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
   <script src="/js/jquery-3.4.1.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
-  <!-- <script src="/js/scripts.js"></script> -->
+  <script src="/js/scripts.js"></script>
 
 </body>
 
