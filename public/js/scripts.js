@@ -3,10 +3,8 @@ const info = 'info'
 const danger = 'danger'
 
 $(document).ready(function () {
-    const webApiDomain = 'http://api.ghogus.com'
-    // const webApiDomain = 'http://localhost:3000'
-    // const webApiDomain = ''
-    // console.log('amb: ' + process.env.NODE_ENV)
+    // const webApiDomain = 'http://api.ghogus.com'
+    const webApiDomain = 'http://localhost:3000'
     var register_id = '';
     loadTable()
     $('.alert').hide()

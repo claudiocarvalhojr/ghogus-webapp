@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
     })
 })
 
+
 /* POST findByName  */
 router.post('/search', function (req, res, next) {
     var query = req.body.buscar;
@@ -39,6 +40,7 @@ router.get('/new', function (req, res, next) {
 });
 
 /* POST insert  */
+
 router.post('/new', function (req, res, next) {
     var nome = req.body.nome;
     var idade = parseInt(req.body.idade);
@@ -48,6 +50,31 @@ router.post('/new', function (req, res, next) {
         res.redirect('/clientes');
     })
 });
+
+// router.post('http://localhost:3000/clientes',
+//     {
+//         nome: 'Pedro',
+//         idade: 10,
+//         uf: 'SC'
+//     }, function (data) {
+//         res.redirect('/clientes');
+//     })
+
+// var Request = require('request')
+// Request.post({
+//     "headers": { "content-type": "application/json" },
+//     "url": "http://localhost:3000/clientes",
+//     "body": JSON.stringify({
+//         nome: 'Pedro',
+//         idade: 10,
+//         uf: 'RS'
+//     })
+// }, (error, response, body) => {
+//     if (error) {
+//         return console.dir(error);
+//     }
+//     console.dir(JSON.parse(body));
+// });
 
 /* GET findById  */
 router.get('/edit/:id', function (req, res, next) {

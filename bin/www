@@ -4,6 +4,8 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+global.envinroment = process.env.NODE_ENV;
+
 const mongoClient = require("mongodb").MongoClient;
 var DB_CONNECTION = '';
 
