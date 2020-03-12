@@ -1,113 +1,112 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 
-/* GET home c/ findAll */
+var request = require('request')
+
+/* GET lista de clientes */
 router.get('/', function (req, res) {
-    global.db.findAll('customers', (err, docs) => {
-        if (err) { return console.log(err); }
-        res.render('index', {
-            page: 'clientes',
-            title: 'Listagem de Clientes',
-            docs
-        });
+    res.render('index', {
+        page: 'clientes',
+        title: 'Listagem de Clientes'
     })
 })
 
-
 /* POST findByName  */
 router.post('/search', function (req, res, next) {
-    var query = req.body.buscar;
+    var query = req.body.buscar
     if (query == "" || typeof query === "undefined") {
-        res.redirect('/clientes');
+        res.redirect('/clientes')
     } else {
         global.db.findByName('customers', query, (err, docs) => {
-            if (err) { return console.log(err); }
+            if (err) { return console.log(err) }
             res.render('index', {
                 page: 'clientes',
                 title: 'Listagem de Clientes',
                 docs
-            });
+            })
         })
     }
-});
+})
 
-/* GET new  */
+/* GET new customer */
 router.get('/new', function (req, res, next) {
     res.render('index', {
         page: 'new',
         title: 'Novo Cliente'
-    });
-});
+    })
+})
 
 /* POST insert  */
 
-router.post('/new', function (req, res, next) {
-    var nome = req.body.nome;
-    var idade = parseInt(req.body.idade);
-    var uf = req.body.uf;
-    global.db.insertOne('customers', { nome, idade, uf }, (err, result) => {
-        if (err) { return console.log(err); }
-        res.redirect('/clientes');
-    })
-});
+router.post('http://localhost:3000/clientes', function (req, res, next) {
+    var nome = req.body.nome
+    var idade = parseInt(req.body.idade)
+    var uf = req.body.uf
+    // global.db.insertOne('customers', { nome, idade, uf }, (err, result) => {
+    //     if (err) { return console.log(err) }
+    //     res.redirect('/clientes')
+    // })
+})
 
-// router.post('http://localhost:3000/clientes',
-//     {
-//         nome: 'Pedro',
-//         idade: 10,
-//         uf: 'SC'
-//     }, function (data) {
-//         res.redirect('/clientes');
-//     })
-
-// var Request = require('request')
-// Request.post({
-//     "headers": { "content-type": "application/json" },
-//     "url": "http://localhost:3000/clientes",
-//     "body": JSON.stringify({
-//         nome: 'Pedro',
-//         idade: 10,
-//         uf: 'RS'
-//     })
-// }, (error, response, body) => {
-//     if (error) {
-//         return console.dir(error);
-//     }
-//     console.dir(JSON.parse(body));
-// });
-
-/* GET findById  */
-router.get('/edit/:id', function (req, res, next) {
-    var id = req.params.id;
-    global.db.findById('customers', id, (err, docs) => {
-        if (err) { return console.log(err); }
+/* GET edit customer  */
+router.get('/edit/:id', function (req, res) {
+    var id = req.params.id
+    var webApiDomain = 'http://localhost:3000/clientes/' + id
+    request.get(webApiDomain, (err, result) => {
+        if (err) { return console.log(err) }
         res.render('index', {
             page: 'edit',
             title: 'Editar Cliente',
-            doc: docs[0]
-        });
+            doc: JSON.parse(result.body)
+        })
     })
-});
+})
 
-/* POST updateOne */
+/* POST edit customer */
 router.post('/edit/:id', function (req, res) {
-    var id = req.params.id;
-    var nome = req.body.nome;
-    var idade = parseInt(req.body.idade);
-    var uf = req.body.uf;
-    global.db.updateOne('customers', id, { nome, idade, uf }, (err, result) => {
-        if (err) { return console.log(err); }
-        res.redirect('/clientes');
-    });
-});
+
+    var id = req.params.id
+    var nome = req.body.nome
+    var idade = parseInt(req.body.idade)
+    var uf = req.body.uf
+
+
+    console.log('ID: ' + id)
+    console.log('NOME: ' + nome)
+    console.log('IDADE: ' + idade)
+    console.log('UF: ' + uf)
+
+    // const data = req.body.formEditCustomer
+    // const json = {}
+    // data.forEach(item => json[item['name']] = item['value'])
+    // console.log(json)
+
+    const json = JSON.stringify({ "_id": id, "nome": nome, "idade": idade, "uf": uf })
+    const webApiDomain = 'http://localhost:3000/clientes/' + id
+
+    console.log("json: " + json)
+
+    request.post(webApiDomain, json, (err, response, body) => {
+        if (err) { return console.log(err) }
+        res.render('index', {
+            page: 'clientes',
+            title: 'Listagem de Clientes'
+        })
+    })
+
+    // global.db.updateOne('customers', id, { nome, idade, uf }, (err, result) => {
+    //     if (err) { return console.log(err) }
+    //     res.redirect('/clientes')
+    // })
+})
 
 /* GET deleteOne */
 router.get('/delete/:id', function (req, res) {
-    var id = req.params.id;
+    var id = req.params.id
     global.db.deleteOne('customers', id, (err, result) => {
-        if (err) { return console.log(err); }
-        res.redirect('/clientes');
-    });
-});
+        if (err) { return console.log(err) }
+        res.redirect('/clientes')
+    })
+})
 
-module.exports = router;
+module.exports = router
