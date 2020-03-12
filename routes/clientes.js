@@ -36,7 +36,7 @@ router.get('/new', function (req, res, next) {
     })
 })
 
-/* POST insert  */
+/* POST insert customer */
 
 router.post('http://localhost:3000/clientes', function (req, res, next) {
     var nome = req.body.nome
@@ -64,40 +64,18 @@ router.get('/edit/:id', function (req, res) {
 
 /* POST edit customer */
 router.post('/edit/:id', function (req, res) {
-
     var id = req.params.id
     var nome = req.body.nome
     var idade = parseInt(req.body.idade)
     var uf = req.body.uf
-
-
-    console.log('ID: ' + id)
-    console.log('NOME: ' + nome)
-    console.log('IDADE: ' + idade)
-    console.log('UF: ' + uf)
-
-    // const data = req.body.formEditCustomer
-    // const json = {}
-    // data.forEach(item => json[item['name']] = item['value'])
-    // console.log(json)
-
-    const json = JSON.stringify({ "_id": id, "nome": nome, "idade": idade, "uf": uf })
     const webApiDomain = 'http://localhost:3000/clientes/' + id
-
-    console.log("json: " + json)
-
-    request.post(webApiDomain, json, (err, response, body) => {
+    request.patch(webApiDomain, {json: {'nome': nome,'idade':idade,'uf':uf}}, (err, response, body) => {
         if (err) { return console.log(err) }
         res.render('index', {
             page: 'clientes',
             title: 'Listagem de Clientes'
         })
     })
-
-    // global.db.updateOne('customers', id, { nome, idade, uf }, (err, result) => {
-    //     if (err) { return console.log(err) }
-    //     res.redirect('/clientes')
-    // })
 })
 
 /* GET deleteOne */
