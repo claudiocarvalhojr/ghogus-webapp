@@ -12,5 +12,10 @@
             <option value="PR" <% if ( doc.uf == "PR") { %>selected<% } %>>PR</option>
         </select>
     </p>
-    <p><a href="/clientes">Voltar</a> | <input type="submit" value="Atualizar" /></p>
+    <p>
+        <div class="from-group">
+            <input type="submit" value="Atualizar" class="btn btn-md btn-primary" /> | 
+            <a id="btnReturn" href="/clientes" class="btn btn-md btn-default">Voltar</a>
+       </div>
+    </p>
 </form>
