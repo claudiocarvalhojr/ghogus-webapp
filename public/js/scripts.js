@@ -2,33 +2,19 @@ const success = 'success'
 const info = 'info'
 const danger = 'danger'
 
+var webApiDomain = ''
+var hostName = location.hostname;
+
+if (hostName === 'localhost') {
+    webApiDomain = 'http://localhost:3000/clientes/'
+} else {
+    webApiDomain = 'http://api.ghogus.com/clientes/'
+}
+
 $(document).ready(function () {
-    const webApiDomain = 'http://api.ghogus.com/clientes/'
-    // const webApiDomain = 'http://localhost:3000/clientes/'
     var register_id = '';
     loadTable()
     $('.alert').hide()
-    // $('#btnList,#btnRegister').click(function () {
-    //     $('#divListagem,#divCadastro').toggle();
-    // })
-    // $('form').submit(function (event) {
-    //     event.preventDefault()
-    //     if ($('input[name="nome"]').val() === '' || $('input[name="idade"]').val() === '') {
-    //         alertMessage('#msgErrorSave')
-    //         return
-    //     }
-    //     const data = $(this).serializeArray()
-    //     updateDatabase(data, loadTable)
-    //     $('#divListagem,#divCadastro').toggle()
-    // })
-    // function updateDatabase(data, callback) {
-    //     const json = {}
-    //     data.forEach(item => json[item['name']] = item['value'])
-    //     $.post(webApiDomain + '/clientes', json, function (data) {
-    //         alertMessage('#msgSave')
-    //         loadTable()
-    //     })
-    // }
     function loadTable() {
         const tbody = $('table > tbody')
         tbody.empty()
