@@ -7,8 +7,9 @@ var webApiDomain = ''
 
 if (process.env.NODE_ENV !== 'production') {
     webApiDomain = 'http://api.ghogus.com/clientes/'
-else 
+} else {
     webApiDomain = 'http://localhost:3000/clientes/'
+}
 
 /* GET lista de clientes */
 router.get('/', function (req, res) {
