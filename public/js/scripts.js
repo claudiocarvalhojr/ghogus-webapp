@@ -3,8 +3,8 @@ const info = 'info'
 const danger = 'danger'
 
 $(document).ready(function () {
-    // const webApiDomain = 'http://api.ghogus.com'
-    const webApiDomain = 'http://localhost:3000'
+    const webApiDomain = 'http://api.ghogus.com/clientes/'
+    // const webApiDomain = 'http://localhost:3000/clientes/'
     var register_id = '';
     loadTable()
     $('.alert').hide()
@@ -33,7 +33,7 @@ $(document).ready(function () {
         const tbody = $('table > tbody')
         tbody.empty()
         let count = 0;
-        $.getJSON(webApiDomain + '/clientes', function (data) {
+        $.getJSON(webApiDomain, function (data) {
             data.forEach(item => {
                 count++
                 let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="colId">' + count + '</td><td id="colNome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
@@ -43,7 +43,7 @@ $(document).ready(function () {
     }
     function deleteCustomer(id, callback) {
         $.ajax({
-            url: webApiDomain + '/clientes/' + id,
+            url: webApiDomain + id,
             method: 'DELETE',
             success: function (result) {
                 alertMessage('#msgDelete')
