@@ -13,9 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 
 /* GET lista de clientes */
 router.get('/', function (req, res) {
-
-    console.log('Environment: ' + process.env.NODE_ENV)
-
     res.render('index', {
         page: 'clientes',
         title: 'Listagem de Clientes'
@@ -41,9 +38,6 @@ router.get('/', function (req, res) {
 
 /* GET new customer */
 router.get('/new', function (req, res, next) {
-
-    console.log('Environment: ' + process.env.NODE_ENV)
-
     res.render('index', {
         page: 'new',
         title: 'Novo Cliente'
