@@ -3,33 +3,46 @@ var router = express.Router()
 
 var request = require('request')
 
+var webApiDomain = ''
+
+if (process.env.NODE_ENV !== 'production') {
+    webApiDomain = 'http://api.ghogus.com/clientes/'
+else 
+    webApiDomain = 'http://localhost:3000/clientes/'
+
 /* GET lista de clientes */
 router.get('/', function (req, res) {
+
+    console.log('Environment: ' + process.env.NODE_ENV)
+
     res.render('index', {
         page: 'clientes',
         title: 'Listagem de Clientes'
     })
 })
 
-/* POST findByName  */
-router.post('/search', function (req, res, next) {
-    var query = req.body.buscar
-    if (query == "" || typeof query === "undefined") {
-        res.redirect('/clientes')
-    } else {
-        global.db.findByName('customers', query, (err, docs) => {
-            if (err) { return console.log(err) }
-            res.render('index', {
-                page: 'clientes',
-                title: 'Listagem de Clientes',
-                docs
-            })
-        })
-    }
-})
+/* POST findByName  */ // REVER!!!
+// router.post('/search', function (req, res, next) {
+//     var query = req.body.buscar
+//     if (query == "" || typeof query === "undefined") {
+//         res.redirect('/clientes')
+//     } else {
+//         global.db.findByName('customers', query, (err, docs) => {
+//             if (err) { return console.log(err) }
+//             res.render('index', {
+//                 page: 'clientes',
+//                 title: 'Listagem de Clientes',
+//                 docs
+//             })
+//         })
+//     }
+// })
 
 /* GET new customer */
 router.get('/new', function (req, res, next) {
+
+    console.log('Environment: ' + process.env.NODE_ENV)
+
     res.render('index', {
         page: 'new',
         title: 'Novo Cliente'
@@ -37,22 +50,23 @@ router.get('/new', function (req, res, next) {
 })
 
 /* POST insert customer */
-
-router.post('http://localhost:3000/clientes', function (req, res, next) {
+router.post('/new', function (req, res, next) {
     var nome = req.body.nome
     var idade = parseInt(req.body.idade)
     var uf = req.body.uf
-    // global.db.insertOne('customers', { nome, idade, uf }, (err, result) => {
-    //     if (err) { return console.log(err) }
-    //     res.redirect('/clientes')
-    // })
+    request.post(webApiDomain, { json: { 'nome': nome, 'idade': idade, 'uf': uf } }, (err, response, body) => {
+        if (err) { return console.log(err) }
+        res.render('index', {
+            page: 'clientes',
+            title: 'Listagem de Clientes'
+        })
+    })
 })
 
 /* GET edit customer  */
 router.get('/edit/:id', function (req, res) {
     var id = req.params.id
-    var webApiDomain = 'http://localhost:3000/clientes/' + id
-    request.get(webApiDomain, (err, result) => {
+    request.get(webApiDomain + id, (err, result) => {
         if (err) { return console.log(err) }
         res.render('index', {
             page: 'edit',
@@ -62,14 +76,13 @@ router.get('/edit/:id', function (req, res) {
     })
 })
 
-/* POST edit customer */
+/* POST patch customer */
 router.post('/edit/:id', function (req, res) {
     var id = req.params.id
     var nome = req.body.nome
     var idade = parseInt(req.body.idade)
     var uf = req.body.uf
-    const webApiDomain = 'http://localhost:3000/clientes/' + id
-    request.patch(webApiDomain, {json: {'nome': nome,'idade':idade,'uf':uf}}, (err, response, body) => {
+    request.patch(webApiDomain + id, { json: { 'nome': nome, 'idade': idade, 'uf': uf } }, (err, response, body) => {
         if (err) { return console.log(err) }
         res.render('index', {
             page: 'clientes',
@@ -78,13 +91,17 @@ router.post('/edit/:id', function (req, res) {
     })
 })
 
-/* GET deleteOne */
-router.get('/delete/:id', function (req, res) {
-    var id = req.params.id
-    global.db.deleteOne('customers', id, (err, result) => {
-        if (err) { return console.log(err) }
-        res.redirect('/clientes')
-    })
-})
+/* GET deleteOne */ // OCORRE NO SCRIPTS.JS
+// router.get('/delete/:id', function (req, res) {
+//     console.log('aqui...')
+//     var id = req.params.id
+//     request.delete(webApiDomain + id, (err, result) => {
+//         if (err) { return console.log(err) }
+//         res.render('index', {
+//             page: 'clientes',
+//             title: 'Listagem de Clientes'
+//         })
+//     })
+// })
 
 module.exports = router
