@@ -5,7 +5,7 @@ var request = require('request')
 
 var webApiDomain = ''
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'production') {
     webApiDomain = 'http://api.ghogus.com/clientes/'
 } else {
     webApiDomain = 'http://localhost:3000/clientes/'
