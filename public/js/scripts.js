@@ -22,7 +22,7 @@ $(document).ready(function () {
         $.getJSON(webApiDomain, function (data) {
             data.forEach(item => {
                 count++
-                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="colId">' + count + '</td><td id="colNome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info" title="Editar"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm" title="Excluir"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
+                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="colId">' + count + '</td><td id="colNome">' + item.nome + '</td><td id="colIdade">' + item.idade + '</td><td id="colUf">' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info" title="Editar"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm" title="Excluir"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
                 tbody.append(linha)
             })
         })
@@ -52,7 +52,9 @@ $(document).ready(function () {
         register_id = $(this).attr("data-id")
         let nome = $('table > tbody tr#' + register_id).find('#colNome').text()
         let cod = $('table > tbody tr#' + register_id).find('#colId').text()
-        $('.modal-body').text('Excluir o cliente: ' + cod + ' - ' + nome + '?')
+        let idade = $('table > tbody tr#' + register_id).find('#colIdade').text()
+        let uf = $('table > tbody tr#' + register_id).find('#colUf').text()
+        $('.modal-body').text('Excluir o cliente? ' + nome)
     })
     $('#btnClear').on('click', function() {
         clearForm()

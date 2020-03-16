@@ -14,5 +14,7 @@ table tr #colNome {width: 50%; text-align: left;}
 table tr #colId {text-align: left;}
 table tbody tr:hover {background-color: #CCC;}
 #btnListar, input[type="submit"] {width: 25%}
+#divListagem {width: 100%;}
+#divCadastro {width: 100%;}
 /* .from-group {padding-top: 10px;} */
 /* .footer { position: relative; bottom:0; padding: 0; left:0; right: 0; text-align: center; background: #eee; color: dimgray} */
