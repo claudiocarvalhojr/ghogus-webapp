@@ -1,10 +1,11 @@
 var express = require('express')
 var router = express.Router()
-
 var request = require('request')
-
+// var bodyParser = require('body-parser')
+// var app = express()
+// router.use(bodyParser.json())
+// router.use(bodyParser.urlencoded({ extended: true }));
 var webApiDomain = ''
-
 if (process.env.NODE_ENV === 'production') {
     webApiDomain = 'http://api.ghogus.com/clientes/'
 } else {
@@ -12,9 +13,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 /* GET lista de clientes */
-router.get('/', function (req, res) {
+router.route('/').get((req, res) => {
     res.render('index', {
-        page: 'clientes',
+        page: 'client/clientes',
         title: 'Listagem de Clientes'
     })
 })
@@ -37,52 +38,55 @@ router.get('/', function (req, res) {
 // })
 
 /* GET new customer */
-router.get('/new', function (req, res, next) {
+router.route('/new').get((req, res, next) => {
     res.render('index', {
-        page: 'new',
-        title: 'Novo Cliente'
+        page: 'client/cliente',
+        action: 'new',
+        title: 'Cadastrar Cliente',
+        subtitle: 'Preencha os dados abaixo para salvar o cliente.',
+        doc: {}
     })
 })
 
 /* POST insert customer */
-router.post('/new', function (req, res, next) {
-    var nome = req.body.nome
-    var idade = parseInt(req.body.idade)
-    var uf = req.body.uf
-    request.post(webApiDomain, { json: { 'nome': nome, 'idade': idade, 'uf': uf } }, (err, response, body) => {
+router.post('/new', (req, res, next) => {
+    request.post(webApiDomain, {
+        json: {
+            'nome': req.body.nome,
+            'idade': parseInt(req.body.idade),
+            'uf': req.body.uf
+        }
+    }, (err, response, body) => {
         if (err) { return console.log(err) }
-        res.render('index', {
-            page: 'clientes',
-            title: 'Listagem de Clientes'
-        })
+        res.redirect('/clientes')
     })
 })
 
 /* GET edit customer  */
-router.get('/edit/:id', function (req, res) {
-    var id = req.params.id
-    request.get(webApiDomain + id, (err, result) => {
+router.get('/edit/:id', (req, res) => {
+    request.get(webApiDomain + req.params.id, (err, result) => {
         if (err) { return console.log(err) }
         res.render('index', {
-            page: 'edit',
+            page: 'client/cliente',
+            action: 'edit',
             title: 'Editar Cliente',
+            subtitle: 'Altere os dados abaixo para editar o cliente.',
             doc: JSON.parse(result.body)
         })
     })
 })
 
 /* POST patch customer */
-router.post('/edit/:id', function (req, res) {
-    var id = req.params.id
-    var nome = req.body.nome
-    var idade = parseInt(req.body.idade)
-    var uf = req.body.uf
-    request.patch(webApiDomain + id, { json: { 'nome': nome, 'idade': idade, 'uf': uf } }, (err, response, body) => {
+router.post('/edit/:id', (req, res) => {
+    request.patch(webApiDomain + req.params.id, {
+        json: {
+            'nome': req.body.nome,
+            'idade': parseInt(req.body.idade),
+            'uf': req.body.uf
+        }
+    }, (err, response, body) => {
         if (err) { return console.log(err) }
-        res.render('index', {
-            page: 'clientes',
-            title: 'Listagem de Clientes'
-        })
+        res.redirect('/clientes')
     })
 })
 
@@ -93,8 +97,8 @@ router.post('/edit/:id', function (req, res) {
 //     request.delete(webApiDomain + id, (err, result) => {
 //         if (err) { return console.log(err) }
 //         res.render('index', {
-//             page: 'clientes',
-//             title: 'Listagem de Clientes'
+//         page: 'client/clientes',
+//         title: 'Listagem de Clientes'
 //         })
 //     })
 // })

@@ -1,0 +1,41 @@
+<div id="divCadastro" class="row col-xs-12">
+    <div class="row col-xs-12">
+        <h4><%= title %></h4>
+    </div>
+    <div class="row col-xs-12"><%= subtitle %></div>
+    <form action="/clientes/<%= action %>/<%= doc._id %>" method="POST">
+        <div class="form-row">
+            <div class="col-md-12 mb-3">
+                <!-- <label for="tfNome">Nome</label> -->
+                <input type="text" id="tfNome" name="nome" value="<%= doc.nome %>" class="form-control mb-3 mr-sm-3" placeholder="Nome"
+                    required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 mb-3">
+                <!-- <label for="tfIdade">Idade</label> -->
+                <input type="number" id="tfIdade" name="idade" value="<%= doc.idade %>" class="form-control" placeholder="Idade" required min="0" max="150">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12 mb-3">
+                <!-- <label for="tfUf">UF</label> -->
+                <select id="tfUf" name="uf" class="form-control" required>
+                    <option value="" selected disabled>Selecionar...</option>
+                    <option value="RS" <% if ( doc.uf == "RS") { %>selected<% } %>>RS</option>
+                    <option value="SC" <% if ( doc.uf == "SC") { %>selected<% } %>>SC</option>
+                    <option value="PR" <% if ( doc.uf == "PR") { %>selected<% } %>>PR</option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="form-row"> -->
+            <div class="col-md-12 mb-3">
+                <div class="form-group">
+                    <br><br>
+                    <input type="submit" value="Salvar" class="btn btn-md btn-primary" />
+                    <a id="btnReturn" href="/clientes" class="btn btn-md btn-default">Voltar</a>
+                </div>
+            </div>
+        <!-- </div> -->
+    </form>
+</div>

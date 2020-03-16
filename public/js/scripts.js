@@ -22,7 +22,7 @@ $(document).ready(function () {
         $.getJSON(webApiDomain, function (data) {
             data.forEach(item => {
                 count++
-                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="colId">' + count + '</td><td id="colNome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
+                let linha = '<tr id="' + item._id + '" title="' + item.nome + '"><td id="colId">' + count + '</td><td id="colNome">' + item.nome + '</td><td>' + item.idade + '</td><td>' + item.uf + '</td><td><a href="/clientes/edit/' + item._id + '" type="button" id="btnEdit" class="btn btn-md btn-info" title="Editar"><span class="glyphicon glyphicon-edit"></span></a></td><td><button type="button" id="btnRemove" class="btn btn-md btn-danger" data-id="' + item._id + '" data-toggle="modal" data-target="#modalConfirm" title="Excluir"><span class="glyphicon glyphicon-remove"></span></button></td></tr>'
                 tbody.append(linha)
             })
         })
@@ -39,14 +39,14 @@ $(document).ready(function () {
     }
     function alertMessage(id, message) {
         $(id).html(message)
-        $(id).show(1000, function () {
-            setTimeout(function () { $(id).hide(1000) }, 1000)
-        })
+        // $(id).fadeIn( 1000 ).delay( 1000 ).fadeOut(1000)
+        $(id).slideDown( 1000 ).delay( 1000 ).slideUp(1000)
+        // $(id).slideToggle( 1000 ).delay( 1000 ).slideToggle( 1000 )
     }
     function alertMessage(id) {
-        $(id).show(1000, function () {
-            setTimeout(function () { $(id).hide(1000) }, 1000)
-        })
+        // $(id).fadeIn( 1000 ).delay( 1000 ).fadeOut(1000)
+        $(id).slideDown( 1000 ).delay( 1000 ).slideUp(1000)
+        // $(id).slideToggle( 1000 ).delay( 1000 ).slideToggle( 1000 )
     }
     $('body').on('click', 'table > tbody tr td button', function () {
         register_id = $(this).attr("data-id")
